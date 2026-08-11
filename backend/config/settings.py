@@ -37,13 +37,13 @@ class Settings(BaseSettings):
             return [origin.strip() for origin in v.split(",") if origin.strip()]
         return v
 
-    # Admin Security Passkey (loaded from env — never hard-coded)
-    SECURITY_LOG_PASSKEY: str = ""
+    # Admin Security Passkey (loaded from env, defaults to "Flowchat@2026")
+    SECURITY_LOG_PASSKEY: str = "Flowchat@2026"
 
-    # Secure key for gov/elevated-access verification.
+    # Secure key for FlowChat authentication.
     # Set FLOWCHAT_SECURITY_KEY in Render Environment Variables.
     # Never expose this in frontend / client-side code.
-    FLOWCHAT_SECURITY_KEY: str = ""
+    FLOWCHAT_SECURITY_KEY: str = "Flowchat@2026"
 
     class Config:
         case_sensitive = True

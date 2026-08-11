@@ -250,8 +250,8 @@ export const RegisterPage: React.FC = () => {
     if (role === 'Government') {
       try {
         // Attempt backend validation
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-        const response = await fetch(`${apiUrl}/auth/verify-gov`, {
+        const baseUrl = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '');
+        const response = await fetch(`${baseUrl}/auth/verify-gov`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, org: govOrg, access_key: accessKey })
@@ -266,7 +266,7 @@ export const RegisterPage: React.FC = () => {
       } catch (err) {
         // Fallback mock validation if backend isn't running
         await new Promise((r) => setTimeout(r, 1000));
-        if (accessKey !== 'GOV-SECRET-2026') {
+        if (accessKey !== 'Flowchat@2026') {
           setIsLoading(false);
           setModal('gov_key_invalid');
           return;

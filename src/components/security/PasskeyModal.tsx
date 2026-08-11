@@ -104,8 +104,8 @@ export const PasskeyModal: React.FC<PasskeyModalProps> = ({ onSuccess, onCancel 
 
     try {
       // Backend API validation
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-      const response = await fetch(`${apiUrl}/auth/verify-passkey`, {
+      const baseUrl = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '');
+      const response = await fetch(`${baseUrl}/auth/verify-passkey`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ passkey })
@@ -132,7 +132,9 @@ export const PasskeyModal: React.FC<PasskeyModalProps> = ({ onSuccess, onCancel 
       await new Promise((r) => setTimeout(r, 600));
       setIsVerifying(false);
 
-      if (passkey === 'Flowchat@2026') {
+      const validPasskeys = ['Flowchat@2026'];
+
+      if (validPasskeys.includes(passkey.trim())) {
         addToast('verification_success', 'Verification Successful', 'Administrator Passkey confirmed.');
         addAuditLog({
           username: 'System Administrator',
@@ -141,7 +143,7 @@ export const PasskeyModal: React.FC<PasskeyModalProps> = ({ onSuccess, onCancel 
           status: 'Success',
           severity: 'Low',
           ipAddress: '127.0.0.1',
-          description: 'Admin passkey verified via local fallback (backend unreachable).'
+          description: 'Admin passkey verified via local fallback.'
         });
         onSuccess();
         return;
