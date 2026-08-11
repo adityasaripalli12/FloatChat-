@@ -250,7 +250,8 @@ export const RegisterPage: React.FC = () => {
     if (role === 'Government') {
       try {
         // Attempt backend validation
-        const response = await fetch('http://localhost:8000/auth/verify-gov', {
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+        const response = await fetch(`${apiUrl}/auth/verify-gov`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, org: govOrg, access_key: accessKey })

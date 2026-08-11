@@ -126,7 +126,7 @@ def verify_gov(payload: dict, request: Request, db: Session = Depends(get_db)):
     org = payload.get("org", "")
     access_key = payload.get("access_key", "")
     
-    if access_key == "GOV-SECRET-2026":
+    if access_key == settings.FLOWCHAT_SECURITY_KEY:
         audit = AuditLog(
             username=email or "Government User",
             role="Researcher",

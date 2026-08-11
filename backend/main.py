@@ -101,3 +101,8 @@ def read_root():
         "version": settings.VERSION,
         "docs_url": "/docs"
     }
+
+@app.get("/health")
+def health_check():
+    """Health check endpoint for Render and monitoring services."""
+    return {"status": "ok"}
